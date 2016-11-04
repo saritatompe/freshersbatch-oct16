@@ -1,41 +1,72 @@
-package collection;
-import java.util.*;
-class Date
-{
-	int day,month,year;
-	 Date(int day,int month,int year)
-	 {
-		 this.day=day;
-		 this.month=month;
-		 this.year=year;
-	 }
-	 
-	 @Override
-	public int hashCode() {
-		// TODO Auto-generated method stub
-		 
-		  return this.day*this.month;
-	}
-	 @Override
-	 public boolean equals(Object obj) {
-	
-		 if(((Date)obj).day==this.day&&((Date)obj).month==this.month)
-			 return true;
-		 else
-			 return false;
-	}
-	 public String toString()
-	 {
-		 return " "+day+"/"+month+"/"+year;
-	 }
-}
-public class Employee {
+package com.hibernate;
+import javax.persistence.*;
+import javax.persistence.NamedQueries;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Map<Date, String> hmap = new HashMap<Date, String>();
-		hmap.put(new Date(12,7,1994),"ABC");
-		hmap.put(new Date(12,7,1995),"QSA");
-	System.out.println(hmap);
+
+
+	@NamedQueries({
+		@NamedQuery(name="getAllEmployee",
+				query="from Employee")
+		
+	})
+	@Entity
+	@Table(name="employee_master")
+	
+	
+		public class Employee {
+
+		@Id
+		@GeneratedValue	//(strategy=GenerationType.SEQUENCE, generator="my_seq")
+		//@SequenceGenerator(name="my_seq", sequenceName="db_seq",allocationSize=10 ,initialValue=0 )
+		@Column(name="id")
+		private Long id;
+		
+		@Column(name="name")
+		private String name;
+
+		@Column(name="salary")
+		private Long salary;
+		
+		@Column(name="location")
+		private String location;
+		
+		
+		public Employee() {
+		}
+		public Employee(String location,String name,long salary) {
+			this.location=location;
+			this.name = name;
+			this.salary = salary;
+			
+		}
+		public Long getId() {
+			return id;
+		}
+		public void setId(Long id) {
+			this.id = id;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public long getPrice() {
+			return salary;
+		}
+		public void setPrice(long salary) {
+			this.salary = salary;
+		}
+		public String getLocation()
+		{
+			return location;
+		}
+		public void setLocation(String location)
+		{
+			this.location=location;
+		}
+		public String toString() {
+			return id + " - " + location + " - " + name+" - "+salary;
+		}
 	}
-}
+
